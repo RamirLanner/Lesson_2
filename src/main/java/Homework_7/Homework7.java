@@ -9,7 +9,7 @@ public class Homework7 {
 //        int b= 77;
 //        System.out.println((double)a%b);
         int[] myArray = {0,1,2,3,4};
-        int shift =2;
+        int shift =-1;
         moveElements(myArray,shift);
 
     }
@@ -27,11 +27,15 @@ public class Homework7 {
         int indexNow = 0;//индекс элемента который будет переносится, начинаю всегда с 0
         int containerOut = myArray[indexNow];//беру нулевой элемент массива и записываю его во временную переменную, всегда стартую с него
         int containerIn = 0;//вспомогательный элемент, что бы не потерять переносимые элементы
-        if(shift<0){
-            //здесь будет код для -N сдвиг влево
+            //здесь будет код для -/+N сдвиг
             do {//Magic
                 //по этой магической формуле(ниже) расчитываю какой элемент массива нужно заменить текущим(ожидает в containerOut)
-                indexPurpose = (indexNow<Math.abs(realShift))?(length+realShift+indexNow):(indexNow+realShift);
+                if(shift<0){
+                    indexPurpose = (indexNow<Math.abs(realShift))?(length+realShift+indexNow):(indexNow+realShift);//для сммещения влево
+                }
+                else{
+                    indexPurpose = (indexNow<(length-shift))?(realShift+indexNow):(indexNow+realShift-length);//другое условие для смещения вправо
+                }
                 //в ней нет ничего такого, просто пришлось напрячь мозг, ну и дальше переприсвоения, изи
                 containerIn = myArray[indexPurpose];
                 myArray[indexPurpose] = containerOut;
@@ -39,18 +43,6 @@ public class Homework7 {
                 indexNow = indexPurpose;
             }while (indexNow!=0);//пригодился цикл do, бывает же...
             //раз мы начали с 0 элемента то и закончить мы должны там же, математика емае, ну и все когда заменен последний элемент цикл заканчивается
-        }
-        else {
-            //Здесь будет код для +N сдвин вправо
-            do {
-                indexPurpose = (indexNow<(length-shift))?(realShift+indexNow):(indexNow+realShift-length);//другое условие для смещения вправо
-                containerIn = myArray[indexPurpose];
-                myArray[indexPurpose] = containerOut;
-                containerOut = containerIn;
-                //System.out.println(indexNow+"  "+indexPurpose);
-                indexNow = indexPurpose;
-            }while (indexNow!=0);
-        }
         System.out.println(Arrays.toString(myArray));
 
     }
